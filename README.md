@@ -1,5 +1,6 @@
 # fetch-demo
 Take home program for Fetch Rewards interview
+
 General Requirements
 You first should have users enter their name and email on a login screen. Then, you should use this information to hit our login endpoint to authenticate with our service (see API Reference below).
 
