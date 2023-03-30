@@ -1,2 +1,2 @@
-import { Index } from '../routes/index'
+import { Index } from "../routes/index";
 export default Index;
