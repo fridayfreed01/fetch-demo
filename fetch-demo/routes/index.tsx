@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Header } from "../components/header";
 
 export const Index = () => {
   const url = "https://frontend-take-home-service.fetch.com/auth/login/";
@@ -42,6 +43,7 @@ export const Index = () => {
 
   return (
     <div>
+      <Header />
       <button onClick={() => handleFetchData()}>Find Dogs</button>
       {dogs.map((dog) => (
         <div key={dog}>

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-
 export const Header = (props: any) => {
   const username = props.username;
   const router = useRouter();
@@ -16,9 +15,9 @@ export const Header = (props: any) => {
 
   return (
     <div className="bg-white border-b-2 border-double border-gray-600">
-      <div className="bg-gray-100 flex justify-end mb-2">
+      <div className="bg-gradient-to-r from-[#7d1f70] via-[#551653] to-[#1f081e] flex justify-end mb-2">
         <Link href="/login">
-          <div className="inline-flex m-2 justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+          <div className="inline-flex m-2 justify-center rounded-md px-4 py-2 text-sm font-medium text-[#ffa900] shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-100">
             Sign in / Register
           </div>
         </Link>
@@ -26,25 +25,9 @@ export const Header = (props: any) => {
 
       <main className="flex justify-center mx-auto max-w-7xl px-4 sm:mt-10">
         <div className="text-center">
-          <h1 className="text-5xl tracking-tight font-serif font-bold text-gray-800">
-            <Link href="/">shopbop</Link>
-          </h1>
-          <h2 className="p-2 text-3xl tracking-tight font-serif font-bold text-gray-700">
-            <Link href="/">- bop to the top -</Link>
-          </h2>
-          <div className="space-x-10 pt-6 flex justify-between">
-            <Link href="/about">
-              <a className="text-gray-600 hover:text-gray-500">about</a>
-            </Link>
-            <Link href="/leaderboard">
-              <a className="text-gray-600 hover:text-gray-500">leaderboard</a>
-            </Link>
-            <button
-              className="text-gray-600 hover:text-gray-500"
-              onClick={handleClick}
-            >
-              closet
-            </button>
+          <img src="./fetchlogo.svg" />
+          <div className="space-x-10 pt-6 justify-center">
+            <div className="text-[#1f081e]">find your new best friend</div>
           </div>
         </div>
       </main>
