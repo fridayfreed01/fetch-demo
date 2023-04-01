@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import axios from "axios";
 
 export const Login = () => {
   const [email, setEmail] = useState([]);
@@ -8,38 +9,40 @@ export const Login = () => {
   const url = "https://frontend-take-home-service.fetch.com";
 
   const router = useRouter();
-
+  const data = {
+    name: name,
+    email: email,
+  };
+  const config = {
+    headers: {
+      "fetch-api-key":
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
+    },
+    includeCredentials: true,
+  };
+  // @ts-ignore
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "fetch-api-key":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        name: name,
-        email: email,
-      }),
-    }).catch((error) => {
-      console.error("Fetch error: ", error);
-    });
+    axios
+      .post(url, data, config)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error)),
+      [];
   };
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h1 className="text-5xl text-center tracking-tight font-serif font-bold text-gray-800">
-            <Link href="/">fetch</Link>
-          </h1>
-          <h2 className="p-2 text-3xl text-center tracking-tight font-serif font-bold text-gray-700">
+      <div className="justify-center flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto w-full">
+          <div className="flex justify-center">
+          <img src="fetchlogo.svg"/>
+          </div>
+          <h2 className="m-4 text-2xl text-center tracking-tight font-serif font-bold text-gray-700">
             just a bone's throw from your best friend
           </h2>
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
@@ -51,6 +54,7 @@ export const Login = () => {
                 </label>
                 <div className="mt-1">
                   <input
+                    // @ts-ignore
                     onChange={(e) => setEmail(e.target.value)}
                     id="email"
                     name="email"
@@ -71,6 +75,7 @@ export const Login = () => {
                 </label>
                 <div className="mt-1">
                   <input
+                    // @ts-ignore
                     onChange={(e) => setName(e.target.value)}
                     id="name"
                     name="name"
@@ -98,4 +103,3 @@ export const Login = () => {
     </>
   );
 };
-// };
