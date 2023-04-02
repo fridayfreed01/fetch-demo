@@ -1727,6 +1727,11 @@ pacote@^13.0.3, pacote@^13.6.1, pacote@^13.6.2:
     ssri "^9.0.0"
     tar "^6.1.11"
 
+pagination@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/pagination/-/pagination-0.4.6.tgz#d25657bd58d1143545f55ac1af2d299f134b848e"
+  integrity sha512-TnZ3l17uuC5H9Wlc9FMYuEi65JlUCSn1ZAbnLnvUGkR7RgaFknUNGQTEumhjq1Jy1ePkXSiYUFFbHH70LGb9dA==
+
 parse-conflict-json@^2.0.1, parse-conflict-json@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/parse-conflict-json/-/parse-conflict-json-2.0.2.tgz#3d05bc8ffe07d39600dc6436c6aefe382033d323"

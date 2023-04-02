@@ -4,15 +4,21 @@ import { useEffect, useState } from "react";
 import { Header } from "../components/header";
 import axios from "axios";
 import { DogCard } from "../components/dogCard";
+import Paginator from "../components/paginator";
 
 export const Index = () => {
-  const url = "https://frontend-take-home-service.fetch.com/auth/login/";
   const searchUrl = "https://frontend-take-home-service.fetch.com/dogs/search";
   const dogsUrl = "https://frontend-take-home-service.fetch.com/dogs";
 
-  const router = useRouter();
-  const [dogIds, setDogIds] = useState([]);
   const [dogs, setDogs] = useState<any[]>([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [cardsPerPage] = useState(20);
+  let indexOfLastCard = currentPage * cardsPerPage;
+  let indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  let nPages = Math.ceil(dogs.length / cardsPerPage);
+  let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
+
   const config = {
     headers: {
       "fetch-api-key":
@@ -34,19 +40,6 @@ export const Index = () => {
     params,
   };
 
-  const data = {
-    name: "Seth",
-    email: "s.freitag2001@gmail.com",
-  };
-
-  //authentification
-  useEffect(() => {
-    axios
-      .post(url, data, config)
-      .then((response) => {})
-      .catch((error) => console.log(error));
-  }, []);
-
   //get dog ids
   useEffect(() => {
     axios.get(searchUrl, searchConfig).then((response) => {
@@ -57,19 +50,29 @@ export const Index = () => {
   }, []);
 
   //get dogs by id
-  useEffect(() => {}, [dogs]);
+  useEffect(() => {
+    indexOfLastCard = currentPage * cardsPerPage;
+    indexOfFirstCard = indexOfLastCard - cardsPerPage;
+    nPages = Math.ceil(dogs.length / cardsPerPage);
+    currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
+  }, [dogs]);
 
-  const handleFetchData = async () => {};
+  const handleFetchData = () => {};
 
   return (
     <div>
       <Header />
       <button onClick={() => handleFetchData()}>Find Dogs</button>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {dogs?.map((dog) => (
+        {currentCards?.map((dog) => (
           <DogCard key={dog.id} dog={dog} />
         ))}
       </div>
+      <Paginator
+        nPages={nPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };
