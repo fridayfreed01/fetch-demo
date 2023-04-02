@@ -57,8 +57,7 @@ export const Index = () => {
   }, []);
 
   //get dogs by id
-  useEffect(() => {
-  }, [dogs]);
+  useEffect(() => {}, [dogs]);
 
   const handleFetchData = async () => {};
 
@@ -67,9 +66,9 @@ export const Index = () => {
       <Header />
       <button onClick={() => handleFetchData()}>Find Dogs</button>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {dogs?.map((dog) => (
-        <DogCard key={dog.id} dog={dog}/>
-      ))}
+        {dogs?.map((dog) => (
+          <DogCard key={dog.id} dog={dog} />
+        ))}
       </div>
     </div>
   );

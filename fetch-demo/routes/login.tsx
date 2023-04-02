@@ -6,13 +6,10 @@ import axios from "axios";
 export const Login = () => {
   const [email, setEmail] = useState([]);
   const [name, setName] = useState([]);
-  const url = "https://frontend-take-home-service.fetch.com";
+  const url = "https://frontend-take-home-service.fetch.com/auth/login";
 
   const router = useRouter();
-  const data = {
-    name: name,
-    email: email,
-  };
+
   const config = {
     headers: {
       "fetch-api-key":
@@ -22,12 +19,17 @@ export const Login = () => {
   };
   // @ts-ignore
   const handleSubmit = (e) => {
+    const data = {
+      name: name,
+      email: email,
+    };
     e.preventDefault();
     axios
       .post(url, data, config)
-      .then((response) => console.log(response))
+      .then((response) => console.log(response.data))
       .catch((error) => console.log(error)),
       [];
+    router.push("/");
   };
 
   return (
@@ -35,7 +37,7 @@ export const Login = () => {
       <div className="justify-center flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto w-full">
           <div className="flex justify-center">
-          <img src="fetchlogo.svg"/>
+            <img src="fetchlogo.svg" />
           </div>
           <h2 className="m-4 text-2xl text-center tracking-tight font-serif font-bold text-gray-700">
             just a bone's throw from your best friend
@@ -87,14 +89,12 @@ export const Login = () => {
                 </div>
               </div>
               <div>
-                <Link href="/">
-                  <button
-                    type="submit"
-                    className="flex w-full justify-center rounded-md border border-transparent bg-purple-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
-                  >
-                    Sign in
-                  </button>
-                </Link>
+                <button
+                  onClick={handleSubmit}
+                  className="flex w-full justify-center rounded-md border border-transparent bg-purple-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                >
+                  Sign in
+                </button>
               </div>
             </form>
           </div>
