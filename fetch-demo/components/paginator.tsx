@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 interface PaginatorProps {
   nPages: number;
   currentPage: number;
   setCurrentPage: (page: number) => void;
 }
 export const Paginator = (props: PaginatorProps) => {
-  const pageNumbers = Array.from({ length: props.nPages }, (_, i) => i + 1);
+  let pageNumbers = Array.from({ length: props.nPages }, (_, i) => i + 1);
+
+  useEffect(() => {
+    console.log("npages in paginator" + props.nPages)
+    pageNumbers = Array.from({ length: props.nPages }, (_, i) => i + 1);
+ }, [props.nPages])
 
   const nextPage = () => {
     if (props.currentPage !== props.nPages)
@@ -22,7 +27,7 @@ export const Paginator = (props: PaginatorProps) => {
             Previous
           </a>
         </li>
-        {pageNumbers.map((pgNumber) => (
+        {pageNumbers.slice(props.currentPage - 1, props.currentPage + 5).map((pgNumber) => (
           <li
             key={pgNumber}
             className={props.currentPage == pgNumber ? "text-orange-700" : ""}

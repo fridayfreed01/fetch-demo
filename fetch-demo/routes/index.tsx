@@ -16,7 +16,8 @@ export const Index = () => {
   const [cardsPerPage] = useState(20);
   let indexOfLastCard = currentPage * cardsPerPage;
   let indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  let nPages = Math.ceil(dogs.length / cardsPerPage);
+  const [nPages, setnPages] = useState( Math.ceil(dogs.length / cardsPerPage))
+
   let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
 
   const config = {
@@ -55,28 +56,35 @@ export const Index = () => {
   useEffect(() => {
     indexOfLastCard = currentPage * cardsPerPage;
     indexOfFirstCard = indexOfLastCard - cardsPerPage;
-    nPages = Math.ceil(dogs.length / cardsPerPage);
+    setnPages(Math.ceil(dogs.length / cardsPerPage));
     currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
-  }, [dogs]);
+  }, [dogs, nPages]);
 
   useEffect(() => {
     const getDogs = async () => {
       if (currentPage % 5 == 0) {
-        console.log("fetching more dogs");
         const searchResponse = await axios.get(searchUrl, searchConfig);
         const resultIds = searchResponse.data.resultIds;
         const dogsResponse = await axios.post(dogsUrl, resultIds, config);
         dogs.push(...dogsResponse.data);
         setDogs(dogs);
-        console.log(dogs);
+        setnPages(Math.ceil(dogs.length / cardsPerPage))
       }
     };
     getDogs();
   }, [currentPage]);
 
+
+  const handleSearchBreeds = () => {
+    return(
+      console.log('hi')
+    )
+  }
+
   return (
     <div>
       <Header />
+      <input placeholder = "search breeds" onSubmit={handleSearchBreeds} onChange={(e) => e.target.value}></input>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {currentCards?.map((dog) => (
           <DogCard key={dog.id} dog={dog} />
