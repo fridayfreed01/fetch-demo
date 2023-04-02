@@ -15,31 +15,31 @@ export const Paginator = (props: PaginatorProps) => {
     if (props.currentPage !== 1) props.setCurrentPage(props.currentPage - 1);
   };
   return (
-    <nav>
-      <ul className="pagination justify-content-center">
-        <li className="page-item">
-          <a className="page-link" onClick={prevPage} href="#">
+    <nav className="w-full flex justify-center my-10">
+      <ul className="w-1/2 flex flex-row justify-evenly justify-content-center">
+        <li className="">
+          <a className="" onClick={prevPage} href="#">
             Previous
           </a>
         </li>
         {pageNumbers.map((pgNumber) => (
           <li
             key={pgNumber}
-            className={`page-item ${
-              props.currentPage == pgNumber ? "active" : ""
-            } `}
+            className={
+              props.currentPage == pgNumber ? "text-orange-700" : ""
+            }
           >
             <a
               onClick={() => props.setCurrentPage(pgNumber)}
-              className="page-link"
+              className=""
               href="#"
             >
               {pgNumber}
             </a>
           </li>
         ))}
-        <li className="page-item">
-          <a className="page-link" onClick={nextPage} href="#">
+        <li className="">
+          <a className="" onClick={nextPage} href="#">
             Next
           </a>
         </li>
