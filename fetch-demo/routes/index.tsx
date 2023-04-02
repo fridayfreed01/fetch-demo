@@ -29,7 +29,9 @@ export const Index = () => {
   };
   const params = {
     size: 100,
+    from: dogs.length - 1,
   };
+
   const searchConfig = {
     headers: {
       "fetch-api-key":
@@ -57,12 +59,24 @@ export const Index = () => {
     currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
   }, [dogs]);
 
-  const handleFetchData = () => {};
+  useEffect(() => {
+    const getDogs = async () => {
+      if (currentPage % 5 == 0) {
+        console.log("fetching more dogs");
+        const searchResponse = await axios.get(searchUrl, searchConfig);
+        const resultIds = searchResponse.data.resultIds;
+        const dogsResponse = await axios.post(dogsUrl, resultIds, config);
+        dogs.push(...dogsResponse.data);
+        setDogs(dogs);
+        console.log(dogs);
+      }
+    };
+    getDogs();
+  }, [currentPage]);
 
   return (
     <div>
       <Header />
-      <button onClick={() => handleFetchData()}>Find Dogs</button>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {currentCards?.map((dog) => (
           <DogCard key={dog.id} dog={dog} />

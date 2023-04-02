@@ -25,9 +25,7 @@ export const Paginator = (props: PaginatorProps) => {
         {pageNumbers.map((pgNumber) => (
           <li
             key={pgNumber}
-            className={
-              props.currentPage == pgNumber ? "text-orange-700" : ""
-            }
+            className={props.currentPage == pgNumber ? "text-orange-700" : ""}
           >
             <a
               onClick={() => props.setCurrentPage(pgNumber)}
