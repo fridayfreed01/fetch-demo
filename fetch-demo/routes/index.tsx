@@ -18,20 +18,7 @@ export const Index = () => {
   const [nPages, setnPages] = useState(Math.ceil(dogs.length / cardsPerPage));
   const [breeds, setBreeds] = useState<any[]>([]);
   const [search, setSearch] = useState<any[]>([]);
-  const [breedConfig, setBreedConfig] = useState({
-    headers: {
-      "fetch-api-key":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
-      "Content-Type": "application/json",
-      "proxy": "http://localhost:3000",
-    },
-    withCredentials: true,
-    breedParams: {
-      size: 100,
-      from: dogs.length - 1,
-      breeds: search,
-    },
-  });
+  const [sort, setSort] = useState("asc");
 
   let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
 
@@ -47,8 +34,8 @@ export const Index = () => {
   };
   const params = {
     size: 100,
-    from: dogs.length - 1,
-    breeds: search
+    breeds: search,
+    sort: `breed:${sort}`
   };
 
   const searchConfig = {
@@ -62,22 +49,27 @@ export const Index = () => {
   };
 
   useEffect(() => {
-    console.log(search);
-  },[search])
+  },[search]);
+
+  useEffect(() => {
+  },[sort]);
 
   // //get dog ids
   useEffect(() => {
+    console.log(search)
     axios.get(searchUrl, searchConfig).then((response) => {
-      console.log(response);
       axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
         console.log(res.data);
         setDogs(res.data);
       });
     });
-  }, [search]);
+  }, [search, sort]);
 
   //set pages for pagination
   useEffect(() => {
+    if(currentPage >= nPages){
+      setCurrentPage(1);
+    }
     indexOfLastCard = currentPage * cardsPerPage;
     indexOfFirstCard = indexOfLastCard - cardsPerPage;
     setnPages(Math.ceil(dogs.length / cardsPerPage));
@@ -102,7 +94,7 @@ export const Index = () => {
   useEffect(() => {
     axios
       .get("https://frontend-take-home-service.fetch.com/dogs/breeds", config)
-      .then((response) => setBreeds(response.data));
+      .then((response) => {breeds.push(...response.data); setBreeds(breeds)});
   }, []);
 
   
@@ -113,13 +105,30 @@ export const Index = () => {
       <select
         id="breeds"
         onChange={(e) => {
-          setSearch([e.target.value]);
+          if (e.target.value == "") {
+            setSearch([null])
+          }
+          else{
+            setSearch([e.target.value]);
+          }
         }}
       >
-        <option defaultValue={"Search by breed"}>Search by breed</option>
-        {breeds.map((opts, i) => (
-          <option key={i}>{opts}</option>
+        <option label="Search by breed"></option>
+        {breeds.map((breed, i) => (
+          <option key={i}>{breed}</option>
         ))}
+      </select>
+      <select 
+        id="sort"
+        onChange={(e) => {
+          if(e.target.value == "Ascending"){
+            setSort("asc");
+          } else {
+            setSort("desc");
+          }
+        }}>
+          <option defaultValue={"Ascending"}>Ascending</option>
+          <option>Descending</option>
       </select>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {currentCards?.map((dog) => (
