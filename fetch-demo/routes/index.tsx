@@ -16,9 +16,21 @@ export const Index = () => {
   let indexOfLastCard = currentPage * cardsPerPage;
   let indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const [nPages, setnPages] = useState(Math.ceil(dogs.length / cardsPerPage));
-  const [breeds, setBreeds] = useState([]);
-  const [search, setSearch] = useState("");
-
+  const [breeds, setBreeds] = useState<any[]>([]);
+  const [search, setSearch] = useState<any[]>([]);
+  const [breedConfig, setBreedConfig] = useState({
+    headers: {
+      "fetch-api-key":
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+    breedParams: {
+      size: 100,
+      from: dogs.length - 1,
+      breeds: search,
+    },
+  });
   let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
 
   const config = {
@@ -30,29 +42,29 @@ export const Index = () => {
     withCredentials: true,
     "Access-Control-Allow-Headers": true,
   };
-  const params = {
-    size: 100,
-    from: dogs.length - 1,
-  };
+  // const params = {
+  //   size: 100,
+  //   from: dogs.length - 1,
+  // };
 
-  const searchConfig = {
-    headers: {
-      "fetch-api-key":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
-      "Content-Type": "application/json",
-    },
-    withCredentials: true,
-    params,
-  };
+  // const searchConfig = {
+  //   headers: {
+  //     "fetch-api-key":
+  //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
+  //     "Content-Type": "application/json",
+  //   },
+  //   withCredentials: true,
+  //   params,
+  // };
 
-  //get dog ids
-  useEffect(() => {
-    axios.get(searchUrl, searchConfig).then((response) => {
-      axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
-        setDogs(res.data);
-      });
-    });
-  }, []);
+  // //get dog ids
+  // useEffect(() => {
+  //   axios.get(searchUrl, searchConfig).then((response) => {
+  //     axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
+  //       setDogs(res.data);
+  //     });
+  //   });
+  // }, []);
 
   //set pages for pagination
   useEffect(() => {
@@ -66,7 +78,7 @@ export const Index = () => {
   useEffect(() => {
     const getDogs = async () => {
       if (currentPage % 5 == 0) {
-        const searchResponse = await axios.get(searchUrl, searchConfig);
+        const searchResponse = await axios.get(searchUrl, breedConfig);
         const resultIds = searchResponse.data.resultIds;
         const dogsResponse = await axios.post(dogsUrl, resultIds, config);
         dogs.push(...dogsResponse.data);
@@ -75,23 +87,53 @@ export const Index = () => {
       }
     };
     getDogs();
-  }, [currentPage]);
+  }, [currentPage, search]);
 
   useEffect(() => {
     axios
       .get("https://frontend-take-home-service.fetch.com/dogs/breeds", config)
-      .then((response) => setBreeds(response.data));
+      .then((response) => {setBreeds(response.data); setSearch(breeds)});
   }, []);
+
+  // //on dropdown search filter dogs by breed
+  // useEffect(() => {
+  //   console.log(search);
+  //  setBreedConfig({
+  //     headers: {
+  //       "fetch-api-key":
+  //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
+  //       "Content-Type": "application/json",
+  //     },
+  //     withCredentials: true,
+  //     breedParams: {
+  //       size: 100,
+  //       from: dogs.length - 1,
+  //       breeds: search,
+  //     },
+  //   })
+
+  //   console.log("Fetching filtered dogs");
+  //   axios.get(searchUrl, breedConfig).then((response) => {
+  //     console.log(response);
+  //     axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
+  //       setDogs(res.data);
+  //       console.log(res.data);
+  //     });
+  //   });
+  //   //console.log(dogs);
+  // }, [search]);
 
   return (
     <div>
       <Header />
       <select
         id="breeds"
-        onSelect={(e) => {
-          //use e to filter the dogs that are available
+        onChange={(e) => {
+          console.log("Selected breed: " + e.target.value);
+          setSearch([e.target.value]);
         }}
       >
+        <option defaultValue={"Search by breed"}>Search by breed</option>
         {breeds.map((opts, i) => (
           <option key={i}>{opts}</option>
         ))}
