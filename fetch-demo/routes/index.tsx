@@ -80,7 +80,7 @@ export const Index = () => {
   useEffect(() => {
     const getDogs = async () => {
       if (currentPage % 5 == 0) {
-        const searchResponse = await axios.get(searchUrl, breedConfig);
+        const searchResponse = await axios.get(searchUrl, searchConfig);
         const resultIds = searchResponse.data.resultIds;
         const dogsResponse = await axios.post(dogsUrl, resultIds, config);
         dogs.push(...dogsResponse.data);
@@ -89,12 +89,12 @@ export const Index = () => {
       }
     };
     getDogs();
-  }, [currentPage, search]);
+  }, [currentPage]);
 
   useEffect(() => {
     axios
       .get("https://frontend-take-home-service.fetch.com/dogs/breeds", config)
-      .then((response) => {setBreeds(response.data); setSearch(breeds)});
+      .then((response) => setBreeds(response.data));
   }, []);
 
   // //on dropdown search filter dogs by breed
