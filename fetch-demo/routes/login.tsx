@@ -14,8 +14,10 @@ export const Login = () => {
     headers: {
       "fetch-api-key":
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
-    },
+        "proxy": "http://localhost:3000",
+      },
     withCredentials: true,
+    
   };
   // @ts-ignore
   const handleSubmit = (e) => {

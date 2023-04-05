@@ -23,6 +23,7 @@ export const Index = () => {
       "fetch-api-key":
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
       "Content-Type": "application/json",
+      "proxy": "http://localhost:3000",
     },
     withCredentials: true,
     breedParams: {
@@ -38,33 +39,34 @@ export const Index = () => {
       "fetch-api-key":
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
       "Content-Type": "application/json",
+      "proxy": "http://localhost:3000",
     },
     withCredentials: true,
     "Access-Control-Allow-Headers": true,
   };
-  // const params = {
-  //   size: 100,
-  //   from: dogs.length - 1,
-  // };
+  const params = {
+    size: 100,
+    from: dogs.length - 1,
+  };
 
-  // const searchConfig = {
-  //   headers: {
-  //     "fetch-api-key":
-  //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
-  //     "Content-Type": "application/json",
-  //   },
-  //   withCredentials: true,
-  //   params,
-  // };
+  const searchConfig = {
+    headers: {
+      "fetch-api-key":
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+    params,
+  };
 
   // //get dog ids
-  // useEffect(() => {
-  //   axios.get(searchUrl, searchConfig).then((response) => {
-  //     axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
-  //       setDogs(res.data);
-  //     });
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get(searchUrl, searchConfig).then((response) => {
+      axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
+        setDogs(res.data);
+      });
+    });
+  }, []);
 
   //set pages for pagination
   useEffect(() => {
