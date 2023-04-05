@@ -11,12 +11,13 @@ export const Index = () => {
   const dogsUrl = "https://frontend-take-home-service.fetch.com/dogs";
 
   const [dogs, setDogs] = useState<any[]>([]);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(20);
   let indexOfLastCard = currentPage * cardsPerPage;
   let indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const [nPages, setnPages] = useState( Math.ceil(dogs.length / cardsPerPage))
+  const [nPages, setnPages] = useState(Math.ceil(dogs.length / cardsPerPage));
+  const [breeds, setBreeds] = useState([]);
+  const [search, setSearch] = useState("");
 
   let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
 
@@ -27,6 +28,7 @@ export const Index = () => {
       "Content-Type": "application/json",
     },
     withCredentials: true,
+    "Access-Control-Allow-Headers": true,
   };
   const params = {
     size: 100,
@@ -52,7 +54,7 @@ export const Index = () => {
     });
   }, []);
 
-  //get dogs by id
+  //set pages for pagination
   useEffect(() => {
     indexOfLastCard = currentPage * cardsPerPage;
     indexOfFirstCard = indexOfLastCard - cardsPerPage;
@@ -60,6 +62,7 @@ export const Index = () => {
     currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
   }, [dogs, nPages]);
 
+  //display dogs per page
   useEffect(() => {
     const getDogs = async () => {
       if (currentPage % 5 == 0) {
@@ -68,23 +71,31 @@ export const Index = () => {
         const dogsResponse = await axios.post(dogsUrl, resultIds, config);
         dogs.push(...dogsResponse.data);
         setDogs(dogs);
-        setnPages(Math.ceil(dogs.length / cardsPerPage))
+        setnPages(Math.ceil(dogs.length / cardsPerPage));
       }
     };
     getDogs();
   }, [currentPage]);
 
-
-  const handleSearchBreeds = () => {
-    return(
-      console.log('hi')
-    )
-  }
+  useEffect(() => {
+    axios
+      .get("https://frontend-take-home-service.fetch.com/dogs/breeds", config)
+      .then((response) => setBreeds(response.data));
+  }, []);
 
   return (
     <div>
       <Header />
-      <input placeholder = "search breeds" onSubmit={handleSearchBreeds} onChange={(e) => e.target.value}></input>
+      <select
+        id="breeds"
+        onSelect={(e) => {
+          //use e to filter the dogs that are available
+        }}
+      >
+        {breeds.map((opts, i) => (
+          <option key={i}>{opts}</option>
+        ))}
+      </select>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {currentCards?.map((dog) => (
           <DogCard key={dog.id} dog={dog} />

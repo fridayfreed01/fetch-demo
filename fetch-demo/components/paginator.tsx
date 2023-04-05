@@ -8,9 +8,8 @@ export const Paginator = (props: PaginatorProps) => {
   let pageNumbers = Array.from({ length: props.nPages }, (_, i) => i + 1);
 
   useEffect(() => {
-    console.log("npages in paginator" + props.nPages)
     pageNumbers = Array.from({ length: props.nPages }, (_, i) => i + 1);
- }, [props.nPages])
+  }, [props.nPages]);
 
   const nextPage = () => {
     if (props.currentPage !== props.nPages)
@@ -27,20 +26,22 @@ export const Paginator = (props: PaginatorProps) => {
             Previous
           </a>
         </li>
-        {pageNumbers.slice(props.currentPage - 1, props.currentPage + 5).map((pgNumber) => (
-          <li
-            key={pgNumber}
-            className={props.currentPage == pgNumber ? "text-orange-700" : ""}
-          >
-            <a
-              onClick={() => props.setCurrentPage(pgNumber)}
-              className=""
-              href="#"
+        {pageNumbers
+          .slice(props.currentPage - 1, props.currentPage + 5)
+          .map((pgNumber) => (
+            <li
+              key={pgNumber}
+              className={props.currentPage == pgNumber ? "text-orange-700" : ""}
             >
-              {pgNumber}
-            </a>
-          </li>
-        ))}
+              <a
+                onClick={() => props.setCurrentPage(pgNumber)}
+                className=""
+                href="#"
+              >
+                {pgNumber}
+              </a>
+            </li>
+          ))}
         <li className="">
           <a className="" onClick={nextPage} href="#">
             Next
