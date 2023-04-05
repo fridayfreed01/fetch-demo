@@ -32,6 +32,7 @@ export const Index = () => {
       breeds: search,
     },
   });
+
   let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
 
   const config = {
@@ -47,6 +48,7 @@ export const Index = () => {
   const params = {
     size: 100,
     from: dogs.length - 1,
+    breeds: search
   };
 
   const searchConfig = {
@@ -59,14 +61,20 @@ export const Index = () => {
     params,
   };
 
+  useEffect(() => {
+    console.log(search);
+  },[search])
+
   // //get dog ids
   useEffect(() => {
     axios.get(searchUrl, searchConfig).then((response) => {
+      console.log(response);
       axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
+        console.log(res.data);
         setDogs(res.data);
       });
     });
-  }, []);
+  }, [search]);
 
   //set pages for pagination
   useEffect(() => {
@@ -97,33 +105,7 @@ export const Index = () => {
       .then((response) => setBreeds(response.data));
   }, []);
 
-  // //on dropdown search filter dogs by breed
-  // useEffect(() => {
-  //   console.log(search);
-  //  setBreedConfig({
-  //     headers: {
-  //       "fetch-api-key":
-  //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
-  //       "Content-Type": "application/json",
-  //     },
-  //     withCredentials: true,
-  //     breedParams: {
-  //       size: 100,
-  //       from: dogs.length - 1,
-  //       breeds: search,
-  //     },
-  //   })
-
-  //   console.log("Fetching filtered dogs");
-  //   axios.get(searchUrl, breedConfig).then((response) => {
-  //     console.log(response);
-  //     axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
-  //       setDogs(res.data);
-  //       console.log(res.data);
-  //     });
-  //   });
-  //   //console.log(dogs);
-  // }, [search]);
+  
 
   return (
     <div>
@@ -131,7 +113,6 @@ export const Index = () => {
       <select
         id="breeds"
         onChange={(e) => {
-          console.log("Selected breed: " + e.target.value);
           setSearch([e.target.value]);
         }}
       >
