@@ -1,13 +1,13 @@
 interface DogCardProps {
-  setDogIds: any,
-  dogIds:Array<any>,
-  dog: any
+  setDogIds: any;
+  dogIds: Array<any>;
+  dog: any;
 }
 export const DogCard = (props: DogCardProps) => {
   const handleImageSelect = () => {
-      const newDogIds = props.dogIds;
-      console.log(newDogIds)
-      props.setDogIds([...props.dogIds, props.dog.id])
+    const newDogIds = props.dogIds;
+    console.log(newDogIds);
+    props.setDogIds([...props.dogIds, props.dog.id]);
   };
 
   return (

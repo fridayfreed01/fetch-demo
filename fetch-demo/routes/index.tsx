@@ -27,7 +27,6 @@ export const Index = () => {
   const [city, setCity] = useState("");
   const [state, setState] = useState<any[]>([]);
 
-
   let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
 
   const config = {
@@ -70,28 +69,36 @@ export const Index = () => {
     states: state,
     city: city,
     size: 10000,
-  }
+  };
 
   useEffect(() => {}, [search]);
 
   useEffect(() => {}, [sort]);
 
-  useEffect(() => {console.log(dogIds)}, [dogIds]);
+  useEffect(() => {
+    console.log(dogIds);
+  }, [dogIds]);
 
-
-  
   //get locations
   useEffect(() => {
-    const stateZips:any = [];
-    setZips([null])
-    axios.post("https://frontend-take-home-service.fetch.com/locations/search", locationData, locationConfig).then((response) => {
-      const locs = response.data.results;
-      locs.map((loc:any) => {stateZips.push(loc.zip_code)});
-      // error on backend if zipcodes is greater than 100 in length
-      if(stateZips.length > 0) {
-        setZips(stateZips.slice(0, 99))
-      }
-    });
+    const stateZips: any = [];
+    setZips([null]);
+    axios
+      .post(
+        "https://frontend-take-home-service.fetch.com/locations/search",
+        locationData,
+        locationConfig
+      )
+      .then((response) => {
+        const locs = response.data.results;
+        locs.map((loc: any) => {
+          stateZips.push(loc.zip_code);
+        });
+        // error on backend if zipcodes is greater than 100 in length
+        if (stateZips.length > 0) {
+          setZips(stateZips.slice(0, 99));
+        }
+      });
   }, [state, city]);
 
   //get dog ids
@@ -222,7 +229,12 @@ export const Index = () => {
       </select>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {currentCards?.map((dog) => (
-          <DogCard key={dog.id} dog={dog} dogIds={dogIds} setDogIds={setDogIds}/>
+          <DogCard
+            key={dog.id}
+            dog={dog}
+            dogIds={dogIds}
+            setDogIds={setDogIds}
+          />
         ))}
       </div>
       <Paginator
