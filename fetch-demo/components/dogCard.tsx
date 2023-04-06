@@ -1,6 +1,13 @@
-export const DogCard = (props: any) => {
+interface DogCardProps {
+  setDogIds: any,
+  dogIds:Array<any>,
+  dog: any
+}
+export const DogCard = (props: DogCardProps) => {
   const handleImageSelect = () => {
-    //props.onSelect(props.dog.img);
+      const newDogIds = props.dogIds;
+      console.log(newDogIds)
+      props.setDogIds([...props.dogIds, props.dog.id])
   };
 
   return (
@@ -23,15 +30,18 @@ export const DogCard = (props: any) => {
                 {props.dog.name}
               </p>
               <p className="mt-3 text-base text-gray-500">
-                Age {props.dog.age}
+                Age: {props.dog.age}
+              </p>
+              <p className="mt-3 text-base text-gray-500">
+                Zip-Code: {props.dog.zip_code}
               </p>
             </div>
           </div>
           <button
-            className="absolute bottom-4 right-4 px-3 py-2 bg-orange-400 hover:bg-orange-500 rounded font-serif text-gray-200"
+            className="absolute bottom-4 right-4 px-3 py-2 bg-orange-400 hover:bg-orange-500 rounded font-serif text-gray-100"
             onClick={handleImageSelect}
           >
-            More
+            Like
           </button>
         </div>
       </div>
