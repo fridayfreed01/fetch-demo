@@ -158,7 +158,7 @@ export const Index = () => {
           config
         )
         .then((response) => {
-          window.localStorage.setItem('match', response.data.match);
+          window.localStorage.setItem("match", response.data.match);
           router.push({
             pathname: "/likes",
           });
