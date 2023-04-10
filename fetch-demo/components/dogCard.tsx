@@ -1,13 +1,21 @@
+import { useState } from "react";
+
 interface DogCardProps {
   setDogIds: any;
   dogIds: Array<any>;
   dog: any;
 }
 export const DogCard = (props: DogCardProps) => {
-  const handleImageSelect = () => {
-    const newDogIds = props.dogIds;
-    console.log(newDogIds);
-    props.setDogIds([...props.dogIds, props.dog.id]);
+  const [buttonText, setButtonText] = useState("Like");
+
+  const handleSelect = () => {
+    if (buttonText == "Like") {
+      setButtonText("Unlike");
+      props.setDogIds([...props.dogIds, props.dog.id]);
+    } else if (buttonText == "Unlike") {
+      setButtonText("Like");
+      props.dogIds.splice(props.dogIds.indexOf(props.dog.id), 1);
+    }
   };
 
   return (
@@ -39,9 +47,9 @@ export const DogCard = (props: DogCardProps) => {
           </div>
           <button
             className="absolute bottom-4 right-4 px-3 py-2 bg-orange-400 hover:bg-orange-500 rounded font-serif text-gray-100"
-            onClick={handleImageSelect}
+            onClick={handleSelect}
           >
-            Like
+            {buttonText}
           </button>
         </div>
       </div>
