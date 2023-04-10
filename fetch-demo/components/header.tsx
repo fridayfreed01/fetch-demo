@@ -48,7 +48,9 @@ export const Header = (props: any) => {
       </div>
 
       <main className="flex justify-center mx-auto max-w-7xl px-4 sm:mt-10">
-        <img src="./fetchlogo.svg" />
+        <Link href="/">
+          <img src="./fetchlogo.svg" />
+        </Link>
         <div className="space-x-10 pt-6 justify-center">
           <div className="text-[#1f081e]">Welcome!</div>
         </div>
