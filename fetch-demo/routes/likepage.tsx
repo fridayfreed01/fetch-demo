@@ -19,13 +19,10 @@ export const LikePage = () => {
     withCredentials: true,
   };
 
-  
-
   return (
     <div>
       <Header />
       {/* display liked dogs here */}
-        
     </div>
   );
 };

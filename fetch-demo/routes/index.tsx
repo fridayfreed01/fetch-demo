@@ -168,9 +168,7 @@ export const Index = () => {
   };
 
   //fetch the list of dogs in the "liked" dogIds array
-  const handleLikePage = () => {
-    
-  };
+  const handleLikePage = () => {};
 
   return (
     <div>
