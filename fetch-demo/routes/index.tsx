@@ -10,7 +10,6 @@ import { stateAbbreviations } from "../components/stateAbbrev";
 export const Index = () => {
   const searchUrl = "https://frontend-take-home-service.fetch.com/dogs/search";
   const dogsUrl = "https://frontend-take-home-service.fetch.com/dogs";
-
   const [dogs, setDogs] = useState<any[]>([]);
   const [dogIds, setDogIds] = useState<String[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,6 +81,14 @@ export const Index = () => {
 
   useEffect(() => {}, [dogIds]);
 
+  useEffect(() => {
+    const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
+    if (tempIds.length > 0) {
+      console.log(tempIds);
+      setDogIds(tempIds);
+    }
+  }, []);
+
   //get locations
   useEffect(() => {
     const stateZips: any = [];
@@ -104,7 +111,7 @@ export const Index = () => {
       });
   }, [state, city]);
 
-  //get dog ids
+  //get dogs
   useEffect(() => {
     axios.get(searchUrl, searchConfig).then((response) => {
       axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
@@ -131,9 +138,7 @@ export const Index = () => {
         const searchResponse = await axios.get(searchUrl, searchConfig);
         const resultIds = searchResponse.data.resultIds;
         const dogsResponse = await axios.post(dogsUrl, resultIds, config);
-
         dogs.push(...dogsResponse.data);
-
         setDogs(dogs);
         setnPages(Math.ceil(dogs.length / cardsPerPage));
       }
@@ -168,7 +173,10 @@ export const Index = () => {
   };
 
   //fetch the list of dogs in the "liked" dogIds array
-  const handleLikePage = () => {};
+  const handleLikePage = () => {
+    window.localStorage.setItem("dogIds", JSON.stringify(dogIds));
+    router.push("/likepage");
+  };
 
   return (
     <div>

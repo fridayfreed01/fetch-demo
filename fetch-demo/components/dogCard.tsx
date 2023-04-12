@@ -8,14 +8,16 @@ interface DogCardProps {
 export const DogCard = (props: DogCardProps) => {
   const [buttonText, setButtonText] = useState("Like");
 
+  // Logic for changing liked dog
   const handleSelect = () => {
     if (buttonText == "Like") {
       props.setDogIds([...props.dogIds, props.dog.id]);
       setButtonText("Unlike");
     } else if (buttonText == "Unlike") {
       setButtonText("Like");
-      props.dogIds.splice(props.dogIds.indexOf(props.dog.id), 1);
+      props.setDogIds(props.dogIds.filter((id) => id != props.dog.id));
     }
+    window.localStorage.setItem("dogIds", JSON.stringify(props.dogIds));
   };
 
   //save the liked state through page change
@@ -25,7 +27,7 @@ export const DogCard = (props: DogCardProps) => {
     } else {
       setButtonText("Like");
     }
-  }, [buttonText]);
+  }, []);
 
   return (
     <div className="flex col-span-1 justify-center mb-4" key={props.dog.key}>
