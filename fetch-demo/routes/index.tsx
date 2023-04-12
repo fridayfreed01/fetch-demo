@@ -40,6 +40,7 @@ export const Index = () => {
     },
     withCredentials: true,
   };
+
   const params = {
     size: 100,
     breeds: search,
@@ -47,6 +48,7 @@ export const Index = () => {
     ageMax: ageMax,
     zipCodes: zips,
     sort: `breed:${sort}`,
+    from: currentPage - 1,
   };
 
   const searchConfig = {
@@ -78,9 +80,7 @@ export const Index = () => {
 
   useEffect(() => {}, [sort]);
 
-  useEffect(() => {
-    console.log(dogIds);
-  }, [dogIds]);
+  useEffect(() => {}, [dogIds]);
 
   //get locations
   useEffect(() => {
@@ -131,7 +131,9 @@ export const Index = () => {
         const searchResponse = await axios.get(searchUrl, searchConfig);
         const resultIds = searchResponse.data.resultIds;
         const dogsResponse = await axios.post(dogsUrl, resultIds, config);
+
         dogs.push(...dogsResponse.data);
+
         setDogs(dogs);
         setnPages(Math.ceil(dogs.length / cardsPerPage));
       }
@@ -143,8 +145,7 @@ export const Index = () => {
     axios
       .get("https://frontend-take-home-service.fetch.com/dogs/breeds", config)
       .then((response) => {
-        breeds.push(...response.data);
-        setBreeds(breeds);
+        setBreeds(response.data);
       });
   }, []);
 
@@ -160,37 +161,45 @@ export const Index = () => {
         .then((response) => {
           window.localStorage.setItem("match", response.data.match);
           router.push({
-            pathname: "/likes",
+            pathname: "/match",
           });
         });
     }
   };
 
+  //fetch the list of dogs in the "liked" dogIds array
+  const handleLikePage = () => {
+    
+  };
+
   return (
     <div>
       <Header />
-      <div className="flex py-4 px-4">
-        <div className="px-2 w-full">
-          <select
-            className="block  px-1 bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
-            id="breeds"
-            onChange={(e) => {
-              if (e.target.value == "") {
-                setSearch([null]);
-              } else {
-                setSearch([e.target.value]);
-              }
-            }}
-          >
-            <option label="Search by breed"></option>
-            {breeds.map((breed, i) => (
-              <option key={i}>{breed}</option>
-            ))}
-          </select>
-        </div>
+      <div className="flex justify-center text-xl py-4">
+        <div>Customize your search for the perfect match!</div>
+      </div>
+      <div className="flex justify-center py-2 px-6">
+        <select
+          className="px-1 bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+          id="breeds"
+          onChange={(e) => {
+            if (e.target.value == "") {
+              setSearch([null]);
+            } else {
+              setSearch([e.target.value]);
+            }
+          }}
+        >
+          <option label="Search by breed"></option>
+          {breeds.map((breed, i) => (
+            <option key={i}>{breed}</option>
+          ))}
+        </select>
+
+        {/* age */}
         <div className="px-4">
           <input
-            className="block bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+            className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
             id="ageMin"
             placeholder="Age Minimum"
             onChange={(e) => {
@@ -206,8 +215,10 @@ export const Index = () => {
             }}
           ></input>
         </div>
+
+        {/* city */}
         <input
-          className="block w-full px-1 bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+          className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
           id="city"
           placeholder="City"
           onChange={(e) => {
@@ -218,8 +229,9 @@ export const Index = () => {
             }
           }}
         />
+        {/* state */}
         <select
-          className="block w-full px-1 bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+          className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
           id="state"
           onChange={(e) => {
             if (e.target.value == "") {
@@ -234,8 +246,10 @@ export const Index = () => {
             <option key={i}>{state}</option>
           ))}
         </select>
+
+        {/* zip code */}
         <input
-          className="block w-full px-1 bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+          className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
           id="zip"
           placeholder="Zip Code"
           onChange={(e) => {
@@ -246,8 +260,10 @@ export const Index = () => {
             }
           }}
         />
+
+        {/* sort */}
         <select
-          className="block w-full px-1 bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+          className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
           id="sort"
           onChange={(e) => {
             if (e.target.value == "Ascending") {
@@ -260,6 +276,9 @@ export const Index = () => {
           <option defaultValue={"Ascending"}>Ascending</option>
           <option>Descending</option>
         </select>
+        <button className="" onClick={handleLikePage}>
+          View Likes
+        </button>
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {currentCards?.map((dog) => (

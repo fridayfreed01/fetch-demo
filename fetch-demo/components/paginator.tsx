@@ -18,9 +18,19 @@ export const Paginator = (props: PaginatorProps) => {
   const prevPage = () => {
     if (props.currentPage !== 1) props.setCurrentPage(props.currentPage - 1);
   };
+  const toTop = () => {
+    props.setCurrentPage(1);
+  };
   return (
     <nav className="w-full flex justify-center my-10">
       <ul className="w-1/2 flex flex-row justify-evenly justify-content-center">
+        {props.currentPage != 1 && (
+          <li className="">
+            <a className="" onClick={toTop} href="#">
+              Page 1
+            </a>
+          </li>
+        )}
         <li className="">
           <a className="" onClick={prevPage} href="#">
             Previous

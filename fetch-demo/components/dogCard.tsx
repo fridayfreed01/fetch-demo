@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface DogCardProps {
   setDogIds: any;
@@ -10,13 +10,22 @@ export const DogCard = (props: DogCardProps) => {
 
   const handleSelect = () => {
     if (buttonText == "Like") {
-      setButtonText("Unlike");
       props.setDogIds([...props.dogIds, props.dog.id]);
+      setButtonText("Unlike");
     } else if (buttonText == "Unlike") {
       setButtonText("Like");
       props.dogIds.splice(props.dogIds.indexOf(props.dog.id), 1);
     }
   };
+
+  //save the liked state through page change
+  useEffect(() => {
+    if (props.dogIds.includes(props.dog.id)) {
+      setButtonText("Unlike");
+    } else {
+      setButtonText("Like");
+    }
+  }, [buttonText]);
 
   return (
     <div className="flex col-span-1 justify-center mb-4" key={props.dog.key}>
