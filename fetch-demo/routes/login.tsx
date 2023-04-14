@@ -20,17 +20,21 @@ export const Login = () => {
   };
   // @ts-ignore
   const handleSubmit = (e) => {
-    const data = {
-      name: name,
-      email: email,
-    };
-    e.preventDefault();
-    axios
-      .post(url, data, config)
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error)),
-      [];
-    router.push("/");
+    try {
+      const data = {
+        name: name,
+        email: email,
+      };
+      e.preventDefault();
+      axios
+        .post(url, data, config)
+        .then((response) => console.log(response.data))
+        .catch((error) => console.log(error)),
+        [];
+      router.push("/");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

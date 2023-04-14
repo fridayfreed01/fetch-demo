@@ -17,26 +17,37 @@ export const LikePage = () => {
   };
 
   useEffect(() => {
-    axios
-      .post("https://frontend-take-home-service.fetch.com/dogs", dogIds, config)
-      .then((response) => {
-        setLikedDogs(response.data);
-      });
+    try {
+      axios
+        .post(
+          "https://frontend-take-home-service.fetch.com/dogs",
+          dogIds,
+          config
+        )
+        .then((response) => {
+          setLikedDogs(response.data);
+        });
+    } catch (e) {
+      console.log(e);
+    }
   }, [dogIds]);
 
-  useEffect(() => {
-  }, [likedDogs]);
+  useEffect(() => {}, [likedDogs]);
 
   useEffect(() => {
-    const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
-    setDogIds(tempIds);
-    axios
-      .post(
-        "https://frontend-take-home-service.fetch.com/dogs",
-        tempIds,
-        config
-      )
-      .then((response) => setLikedDogs(response.data));
+    try {
+      const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
+      setDogIds(tempIds);
+      axios
+        .post(
+          "https://frontend-take-home-service.fetch.com/dogs",
+          tempIds,
+          config
+        )
+        .then((response) => setLikedDogs(response.data));
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   return (
