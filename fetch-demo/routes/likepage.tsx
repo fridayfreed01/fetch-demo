@@ -2,6 +2,7 @@ import axios from "axios";
 import { DogCard } from "../components/dogCard";
 import { Header } from "../components/header";
 import { useEffect, useState } from "react";
+import { lookupService } from "dns";
 
 export const LikePage = () => {
   const [likedDogs, setLikedDogs] = useState<any>([]);
@@ -23,7 +24,8 @@ export const LikePage = () => {
       });
   }, [dogIds]);
 
-  useEffect(() => {}, [likedDogs]);
+  useEffect(() => {
+  }, [likedDogs]);
 
   useEffect(() => {
     const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
@@ -40,6 +42,12 @@ export const LikePage = () => {
   return (
     <div>
       <Header />
+      {likedDogs.length == 0 && (
+        <div className="flex justify-center py-4 text-xl text-#1f081e">
+          Oops! Looks like you haven't liked any dogs yet. Go back and like some
+          to see them here!
+        </div>
+      )}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {likedDogs?.map((dog: any) => (
           <DogCard

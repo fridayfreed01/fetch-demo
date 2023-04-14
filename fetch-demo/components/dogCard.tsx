@@ -29,6 +29,7 @@ export const DogCard = (props: DogCardProps) => {
     }
   }, []);
 
+
   return (
     <div className="flex col-span-1 justify-center mb-4" key={props.dog.key}>
       <div className="w-3/4 flex flex-col flex-shrink-1 flex-wrap m-5 rounded-lg shadow-gray-300 shadow-lg hover:shadow-gray-400 overflow-hidden">
@@ -41,7 +42,7 @@ export const DogCard = (props: DogCardProps) => {
         </div>
         <div className="h-40 bg-white p-5 flex flex-col justify-between relative">
           <div className="w-3/4">
-            <p className="text-xs md:text-sm font-medium text-orange-600">
+            <p className="text-xs md:text-sm font-medium text-#1f081e">
               {props.dog.breed}
             </p>
             <div>
@@ -57,7 +58,7 @@ export const DogCard = (props: DogCardProps) => {
             </div>
           </div>
           <button
-            className="absolute bottom-4 right-4 px-3 py-2 bg-orange-400 hover:bg-orange-500 rounded font-serif text-gray-100"
+            className="absolute bottom-4 right-4 px-3 py-2 bg-orange-400 hover:bg-orange-500 rounded font-serif text-gray-800"
             onClick={handleSelect}
           >
             {buttonText}

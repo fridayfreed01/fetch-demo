@@ -37,6 +37,7 @@ export const Header = (props: any) => {
   return (
     <div className="bg-white border-b-2 border-double border-gray-600">
       <div className="bg-gradient-to-r from-[#7d1f70] via-[#551653] to-[#1f081e] flex justify-end mb-2">
+        <button>
         <Link href="/login">
           <div
             onClick={handleClick}
@@ -45,12 +46,15 @@ export const Header = (props: any) => {
             Sign Out
           </div>
         </Link>
+        </button>
       </div>
 
       <main className="flex justify-center mx-auto max-w-7xl px-4 sm:mt-10">
+        <button>
         <Link href="/">
           <img src="./fetchlogo.svg" />
         </Link>
+        </button>
       </main>
       <div className="flex justify-center">
         <div className="text-[#1f081e]">find your best friend</div>
