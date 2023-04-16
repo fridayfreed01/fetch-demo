@@ -85,7 +85,7 @@ export const LikePage = () => {
           />
         ))}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

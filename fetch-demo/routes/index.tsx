@@ -78,12 +78,11 @@ export const Index = () => {
 
   useEffect(() => {}, [sort]);
 
-  useEffect(() => {}, [dogIds]);
+
 
   useEffect(() => {
     const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
     if (tempIds.length > 0) {
-      console.log(tempIds);
       setDogIds(tempIds);
     } else {
       setDogIds([]);
@@ -193,25 +192,11 @@ export const Index = () => {
     }
   };
 
-  //fetch the list of dogs in the "liked" dogIds array
-  const handleLikePage = () => {
-    router.push("/likepage");
-    window.localStorage.setItem("dogIds", JSON.stringify(dogIds));
-  };
-
   return (
     <div className="bg-gray-100 w-full">
       <div className="bg-[url('/orangebg.jpg')] bg-center bg-cover border-b-2 border-double border-gray-600">
         <Header />
-        <div className="pt-2 px-3 flex justify-end">
-          <button
-            className="px-10 py-3 bg-[#551653] hover:bg-[#7d1f70] text-gray-50 rounded font-serif"
-            onClick={handleLikePage}
-          >
-            View Likes
-          </button>
-        </div>
-        <div className="flex justify-center text-xl pb-4">
+        <div className="flex justify-center text-xl pb-4 pt-4">
           <div>Customize your search for the perfect match!</div>
         </div>
         <div className="align-items-center justify-items-center grid md:grid-cols-2 xl:grid-cols-6 gap-2 justify-center pb-[8vh] px-6 max-w-full">

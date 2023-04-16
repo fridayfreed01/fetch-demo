@@ -16,10 +16,13 @@ export const DogCard = (props: DogCardProps) => {
 
   // Logic for changing liked dog
   const handleSelect = () => {
+    //liking
     if (buttonFill == false) {
       props.setDogIds([...props.dogIds, props.dog.id]);
       setButtonFill(true);
-    } else if (buttonFill == true) {
+    } 
+    //un-liking
+    else if (buttonFill == true) {
       setButtonFill(false);
       console.log(props.dogIds.filter((id) => id != props.dog.id));
       props.setDogIds(props.dogIds.filter((id) => id != props.dog.id));
