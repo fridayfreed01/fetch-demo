@@ -78,8 +78,6 @@ export const Index = () => {
 
   useEffect(() => {}, [sort]);
 
-
-
   useEffect(() => {
     const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
     if (tempIds.length > 0) {
@@ -91,41 +89,40 @@ export const Index = () => {
 
   //get locations
   useEffect(() => {
-    try {
-      const stateZips: any = [];
-      setZips([null]);
-      axios
-        .post(
-          "https://frontend-take-home-service.fetch.com/locations/search",
-          locationData,
-          locationConfig
-        )
-        .then((response) => {
-          const locs = response.data.results;
-          locs.map((loc: any) => {
-            stateZips.push(loc.zip_code);
-          });
-          // error on backend if zipcodes is greater than 100 in length
-          if (stateZips.length > 0) {
-            setZips(stateZips.slice(0, 99));
-          }
+    const stateZips: any = [];
+    setZips([null]);
+    axios
+      .post(
+        "https://frontend-take-home-service.fetch.com/locations/search",
+        locationData,
+        locationConfig
+      )
+      .then((response) => {
+        const locs = response.data.results;
+        locs.map((loc: any) => {
+          stateZips.push(loc.zip_code);
         });
-    } catch (e) {
-      console.log(e);
-    }
+        // error on backend if zipcodes is greater than 100 in length
+        if (stateZips.length > 0) {
+          setZips(stateZips.slice(0, 99));
+        }
+      })
+      .catch((response) => router.push("/login"));
   }, [state, city]);
 
   //get dogs
   useEffect(() => {
-    try {
-      axios.get(searchUrl, searchConfig).then((response) => {
-        axios.post(dogsUrl, response.data.resultIds, config).then((res) => {
-          setDogs(res.data);
-        });
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    axios
+      .get(searchUrl, searchConfig)
+      .then((response) => {
+        axios
+          .post(dogsUrl, response.data.resultIds, config)
+          .then((res) => {
+            setDogs(res.data);
+          })
+          .catch((response) => router.push("/login"));
+      })
+      .catch((response) => router.push("/login"));
   }, [search, sort, ageMin, ageMax, zips]);
 
   //set pages for pagination
@@ -141,8 +138,8 @@ export const Index = () => {
 
   //display dogs per page
   useEffect(() => {
-    try {
-      const getDogs = async () => {
+    const getDogs = async () => {
+      try {
         if (currentPage % 5 == 0) {
           const searchResponse = await axios.get(searchUrl, searchConfig);
           const resultIds = searchResponse.data.resultIds;
@@ -151,44 +148,38 @@ export const Index = () => {
           setDogs(dogs);
           setnPages(Math.ceil(dogs.length / cardsPerPage));
         }
-      };
-      getDogs();
-    } catch (e) {
-      console.log(e);
-    }
+      } catch (e) {
+        router.push("/login");
+      }
+    };
+    getDogs();
   }, [currentPage]);
 
   useEffect(() => {
-    try {
-      axios
-        .get("https://frontend-take-home-service.fetch.com/dogs/breeds", config)
-        .then((response) => {
-          setBreeds(response.data);
-        });
-    } catch (e) {
-      console.log(e);
-    }
+    axios
+      .get("https://frontend-take-home-service.fetch.com/dogs/breeds", config)
+      .then((response) => {
+        setBreeds(response.data);
+      })
+      .catch((response) => router.push("/login"));
   }, []);
 
   //onclick generate match from array of liked dogs & push to likes page
   const handleGenerateMatch = () => {
-    try {
-      if (dogIds.length > 0) {
-        axios
-          .post(
-            "https://frontend-take-home-service.fetch.com/dogs/match",
-            dogIds,
-            config
-          )
-          .then((response) => {
-            window.localStorage.setItem("match", response.data.match);
-            router.push({
-              pathname: "/match",
-            });
+    if (dogIds.length > 0) {
+      axios
+        .post(
+          "https://frontend-take-home-service.fetch.com/dogs/match",
+          dogIds,
+          config
+        )
+        .then((response) => {
+          window.localStorage.setItem("match", response.data.match);
+          router.push({
+            pathname: "/match",
           });
-      }
-    } catch (e) {
-      console.log(e);
+        })
+        .catch((response) => router.push("/login"));
     }
   };
 

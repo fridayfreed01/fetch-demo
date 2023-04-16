@@ -20,7 +20,7 @@ export const DogCard = (props: DogCardProps) => {
     if (buttonFill == false) {
       props.setDogIds([...props.dogIds, props.dog.id]);
       setButtonFill(true);
-    } 
+    }
     //un-liking
     else if (buttonFill == true) {
       setButtonFill(false);
