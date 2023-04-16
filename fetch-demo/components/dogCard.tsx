@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import HeartIcon from "@heroicons/react/24/outline/HeartIcon";
+import  HeartIconFilled  from "@heroicons/react/20/solid/HeartIcon";
 
 interface DogCardProps {
   setDogIds: any;
@@ -6,7 +8,7 @@ interface DogCardProps {
   dog: any;
 }
 export const DogCard = (props: DogCardProps) => {
-  const [buttonText, setButtonText] = useState("Like");
+  const [buttonFill, setButtonFill] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem("dogIds", JSON.stringify(props.dogIds));
@@ -14,11 +16,11 @@ export const DogCard = (props: DogCardProps) => {
 
   // Logic for changing liked dog
   const handleSelect = () => {
-    if (buttonText == "Like") {
+    if (buttonFill == false) {
       props.setDogIds([...props.dogIds, props.dog.id]);
-      setButtonText("Unlike");
-    } else if (buttonText == "Unlike") {
-      setButtonText("Like");
+      setButtonFill(true);
+    } else if (buttonFill == true) {
+      setButtonFill(false);
       console.log(props.dogIds.filter((id) => id != props.dog.id));
       props.setDogIds(props.dogIds.filter((id) => id != props.dog.id));
     }
@@ -27,9 +29,9 @@ export const DogCard = (props: DogCardProps) => {
   //save the liked state through page change
   useEffect(() => {
     if (props.dogIds.includes(props.dog.id)) {
-      setButtonText("Unlike");
+      setButtonFill(true);
     } else {
-      setButtonText("Like");
+      setButtonFill(false);
     }
   }, []);
 
@@ -60,12 +62,23 @@ export const DogCard = (props: DogCardProps) => {
               </p>
             </div>
           </div>
-          <button
-            className="absolute bottom-4 right-4 px-3 py-2 bg-orange-400 hover:bg-orange-500 rounded font-serif text-gray-800"
-            onClick={handleSelect}
-          >
-            {buttonText}
-          </button>
+          {buttonFill ? (
+            <button
+              className="absolute bottom-4 right-4"
+              onClick={handleSelect}
+            >
+              {buttonFill}
+              <HeartIconFilled className="h-8 w-8 text-red-600"/>
+            </button>
+          ) : (
+            <button
+              className="absolute bottom-4 right-4"
+              onClick={handleSelect}
+            >
+              {buttonFill}
+              <HeartIcon className="h-8 w-8 text-red-600"/>
+            </button>
+          )}
         </div>
       </div>
     </div>

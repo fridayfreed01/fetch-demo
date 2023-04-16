@@ -2,7 +2,6 @@ import axios from "axios";
 import { DogCard } from "../components/dogCard";
 import { Header } from "../components/header";
 import { useEffect, useState } from "react";
-import { lookupService } from "dns";
 
 export const LikePage = () => {
   const [likedDogs, setLikedDogs] = useState<any>([]);
