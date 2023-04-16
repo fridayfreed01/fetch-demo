@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Header } from "../components/header";
@@ -26,7 +25,6 @@ export const Index = () => {
   const [zips, setZips] = useState<any[]>([]);
   const [city, setCity] = useState("");
   const [state, setState] = useState<any[]>([]);
-  const [match, setMatch] = useState("");
 
   const router = useRouter();
 
@@ -203,7 +201,7 @@ export const Index = () => {
 
   return (
     <div className="bg-gray-100 w-full">
-      <div className="bg-[#e86d57c5] border-b-2 border-double border-gray-600">
+      <div className="bg-[url('/orangebg.jpg')] bg-center bg-cover border-b-2 border-double border-gray-600">
         <Header />
         <div className="pt-2 px-3 flex justify-end">
           <button
@@ -324,7 +322,7 @@ export const Index = () => {
           </div>
         </div>
       </div>
-      <div className="grid md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid mt-4 md:grid-cols-2 xl:grid-cols-4">
         {currentCards?.map((dog) => (
           <DogCard
             key={dog.id}
@@ -340,14 +338,22 @@ export const Index = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      <div className="bg-[url('/jumpingdogbg.jpg')] bg-cover bg-blend-multiply pt-[80vh] mt-8 border-b-2 border-double border-gray-600">
-        <button
-          className="px-10 py-3 bg-[#551653] hover:bg-[#7d1f70] rounded font-serif text-gray-100"
-          onClick={handleGenerateMatch}
-          disabled={dogIds.length <= 0}
-        >
-          Generate Match!
-        </button>
+      <div className="bg-[url('/jumpingdogbg.jpg')] bg-[center_1rem] bg-no-repeat bg-cover bg-start md:bg-center bg-blend-multiply mt-8 border-b-2 border-double border-gray-600 flex flex-row items-center justify-center md:justify-end">
+        <div className="bg-[#ffffff7e] rounded md:w-1/2 xl:w-1/3 my-[20vh] py-14 m-2 md:mr-6 flex flex-col justify-items-center text-center shadow-[#b3b3b394] shadow-lg">
+          <div className="text-2xl font-semibold font-serif py-2">
+            find your
+          </div>
+          <div className="text-6xl font-bold font-serif pb-6 text-[#551653]">
+            furry friend!
+          </div>
+          <button
+            className="px-10 py-4 mx-8 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:bg-gradient-to-r hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 rounded font-serif text-gray-100 text-2xl shadow-orange-700 shadow"
+            onClick={handleGenerateMatch}
+            disabled={dogIds.length <= 0}
+          >
+            generate match!
+          </button>
+        </div>
       </div>
       <Footer />
     </div>

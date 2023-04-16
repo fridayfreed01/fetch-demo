@@ -53,7 +53,7 @@ export const Header = (props: any) => {
         </button>
       </div>
       <div className="flex justify-center mb-[10vh]">
-        <button className="bg-orange-400 rounded-sm border-2 border-gray-900 flex flex-col p-8">
+        <button className="bg-orange-400 rounded shadow shadow-orange-800 flex flex-col p-8">
           <Link href="/">
             <img src="./fetchlogo.svg" />
           </Link>
