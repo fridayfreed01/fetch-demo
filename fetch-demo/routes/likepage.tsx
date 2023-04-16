@@ -2,6 +2,9 @@ import axios from "axios";
 import { DogCard } from "../components/dogCard";
 import { Header } from "../components/header";
 import { useEffect, useState } from "react";
+import Lottie from "react-lottie";
+import * as animationData from "../lotties/dog.json";
+import { Footer } from "../components/footer";
 
 export const LikePage = () => {
   const [likedDogs, setLikedDogs] = useState<any>([]);
@@ -13,6 +16,15 @@ export const LikePage = () => {
       "Content-Type": "application/json",
     },
     withCredentials: true,
+  };
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
 
   useEffect(() => {
@@ -50,15 +62,20 @@ export const LikePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="bg-gray-100 h-screen w-full">
       <Header />
       {likedDogs.length == 0 && (
-        <div className="flex justify-center py-4 text-xl text-#1f081e">
-          Oops! Looks like you haven't liked any dogs yet. Go back and like some
-          to see them here!
-        </div>
+        <>
+          <div className="flex justify-center py-4 text-xl text-center text-#1f081e">
+            Oops! Looks like you haven't liked any dogs yet. Go back and like
+            some to see them here!
+          </div>
+          <div className="-ml-14 md:pr-10">
+            <Lottie options={defaultOptions} height={200} width={300} />
+          </div>
+        </>
       )}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="bg-gray-100 py-[10vh] grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {likedDogs?.map((dog: any) => (
           <DogCard
             key={dog.id}
@@ -68,6 +85,7 @@ export const LikePage = () => {
           />
         ))}
       </div>
+      <Footer/>
     </div>
   );
 };

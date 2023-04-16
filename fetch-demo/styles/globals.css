@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.lottie-svg-class{
+    width:calc(max(710px, 40vw))!important;
+}

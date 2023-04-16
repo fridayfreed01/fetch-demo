@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import HeartIcon from "@heroicons/react/24/outline/HeartIcon";
-import  HeartIconFilled  from "@heroicons/react/20/solid/HeartIcon";
+import HeartIconFilled from "@heroicons/react/20/solid/HeartIcon";
 
 interface DogCardProps {
   setDogIds: any;
@@ -68,7 +68,7 @@ export const DogCard = (props: DogCardProps) => {
               onClick={handleSelect}
             >
               {buttonFill}
-              <HeartIconFilled className="h-8 w-8 text-red-600"/>
+              <HeartIconFilled className="h-8 w-8 text-red-600" />
             </button>
           ) : (
             <button
@@ -76,7 +76,7 @@ export const DogCard = (props: DogCardProps) => {
               onClick={handleSelect}
             >
               {buttonFill}
-              <HeartIcon className="h-8 w-8 text-red-600"/>
+              <HeartIcon className="h-8 w-8 text-red-600" />
             </button>
           )}
         </div>

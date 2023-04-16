@@ -1,18 +1,9 @@
 import axios from "axios";
-import { log } from "console";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
 export const Header = (props: any) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const name = props.name;
   const email = props.email;
-  const router = useRouter();
   const logoutUrl = "https://frontend-take-home-service.fetch.com/auth/logout";
   const config = {
     headers: {
@@ -25,10 +16,6 @@ export const Header = (props: any) => {
     name: name,
     email: email,
   };
-  const navigation = [
-    { name: "Home", href: "#" },
-    { name: "Likes", href: "#" },
-  ];
 
   // @ts-ignore
   const handleClick = (e) => {
