@@ -6,6 +6,7 @@ import axios from "axios";
 import { DogCard } from "../components/dogCard";
 import Paginator from "../components/paginator";
 import { stateAbbreviations } from "../components/stateAbbrev";
+import { Footer } from "../components/footer";
 
 export const Index = () => {
   const searchUrl = "https://frontend-take-home-service.fetch.com/dogs/search";
@@ -201,24 +202,24 @@ export const Index = () => {
   };
 
   return (
-    <div className="bg-#F0EAD6 w-full">
-      <div className="border-b-2 border-double border-gray-600">
+    <div className="bg-gray-100 w-full">
+      <div className="bg-[#e86d57c5] border-b-2 border-double border-gray-600">
         <Header />
-        <div className="block pt-2 px-3 flex justify-end">
+        <div className="pt-2 px-3 flex justify-end">
           <button
-            className="px-3 py-2 bg-orange-400 hover:bg-orange-500 rounded font-serif"
+            className="px-10 py-3 bg-[#551653] hover:bg-[#7d1f70] text-gray-50 rounded font-serif"
             onClick={handleLikePage}
           >
             View Likes
           </button>
         </div>
-        <div className="block flex justify-center text-xl pb-4">
+        <div className="flex justify-center text-xl pb-4">
           <div>Customize your search for the perfect match!</div>
         </div>
-        <div className="flex justify-center py-2 px-6">
+        <div className="align-items-center justify-items-center grid md:grid-cols-2 xl:grid-cols-6 gap-2 justify-center pb-[8vh] px-6 max-w-full">
           <div className="px-2">
             <select
-              className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+              className="bg-white border px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
               id="breeds"
               onChange={(e) => {
                 if (e.target.value == "") {
@@ -238,7 +239,7 @@ export const Index = () => {
           {/* age */}
           <div className="px-2">
             <input
-              className="block bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+              className="block bg-white border px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
               id="ageMin"
               placeholder="Age Minimum"
               onChange={(e) => {
@@ -246,7 +247,7 @@ export const Index = () => {
               }}
             ></input>
             <input
-              className="block bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+              className="block bg-white border mt-2 px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
               id="ageMax"
               placeholder="Age Maximum"
               onChange={(e) => {
@@ -258,7 +259,7 @@ export const Index = () => {
           {/* city */}
           <div className="px-2">
             <input
-              className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+              className="bg-white border px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
               id="city"
               placeholder="City"
               onChange={(e) => {
@@ -292,7 +293,7 @@ export const Index = () => {
           {/* zip code */}
           <div className="px-2">
             <input
-              className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
+              className="bg-white border px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
               id="zip"
               placeholder="Zip Code"
               onChange={(e) => {
@@ -323,7 +324,7 @@ export const Index = () => {
           </div>
         </div>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid md:grid-cols-2 xl:grid-cols-4">
         {currentCards?.map((dog) => (
           <DogCard
             key={dog.id}
@@ -333,19 +334,22 @@ export const Index = () => {
           />
         ))}
       </div>
-      <div className="flex justify-center">
-        <button
-          className="px-3 py-2 bg-orange-400 hover:bg-orange-500 rounded font-serif text-gray-800"
-          onClick={handleGenerateMatch}
-        >
-          Generate Match!
-        </button>
-      </div>
+
       <Paginator
         nPages={nPages}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
+      <div className="bg-[url('/jumpingdogbg.jpg')] bg-cover bg-blend-multiply pt-[80vh] mt-8 border-b-2 border-double border-gray-600">
+        <button
+          className="px-10 py-3 bg-[#551653] hover:bg-[#7d1f70] rounded font-serif text-gray-100"
+          onClick={handleGenerateMatch}
+          disabled={dogIds.length <= 0}
+        >
+          Generate Match!
+        </button>
+      </div>
+      <Footer />
     </div>
   );
 };

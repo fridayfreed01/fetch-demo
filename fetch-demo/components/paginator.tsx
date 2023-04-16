@@ -22,7 +22,7 @@ export const Paginator = (props: PaginatorProps) => {
     props.setCurrentPage(1);
   };
   return (
-    <nav className="w-full flex justify-center my-10">
+    <nav className="w-full flex justify-center mt-[10vh]">
       <ul className="w-1/2 flex flex-row justify-evenly justify-content-center">
         {props.currentPage != 1 && (
           <li className="">

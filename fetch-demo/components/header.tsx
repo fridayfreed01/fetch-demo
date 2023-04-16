@@ -39,8 +39,8 @@ export const Header = (props: any) => {
     }
   };
   return (
-    <div className="bg-white border-b-2 border-double border-gray-600">
-      <div className="bg-gradient-to-r from-[#7d1f70] via-[#551653] to-[#1f081e] flex justify-end mb-2">
+    <div className="bg-[url('/dogtreatbg.jpg')] bg-cover bg-blend-multiply border-b-2 border-double border-gray-600">
+      <div className="bg-gradient-to-r from-[#7d1f70] via-[#551653] to-[#1f081e] flex justify-end mb-[10vh]">
         <button>
           <Link href="/login">
             <div
@@ -52,16 +52,15 @@ export const Header = (props: any) => {
           </Link>
         </button>
       </div>
-
-      <main className="flex justify-center mx-auto max-w-7xl px-4 sm:mt-10">
-        <button>
+      <div className="flex justify-center mb-[10vh]">
+        <button className="bg-orange-400 rounded-sm border-2 border-gray-900 flex flex-col p-8">
           <Link href="/">
             <img src="./fetchlogo.svg" />
           </Link>
+          <div className="text-[#1f081e] pt-2 w-full font-serif">
+            find your best friend
+          </div>
         </button>
-      </main>
-      <div className="flex justify-center">
-        <div className="text-[#1f081e]">find your best friend</div>
       </div>
     </div>
   );
