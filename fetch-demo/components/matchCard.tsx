@@ -9,7 +9,7 @@ interface MatchCardProps {
 }
 export const MatchCard = (props: MatchCardProps) => {
   return (
-    <div className="flex justify-center mb-4">
+    <div className="flex justify-center mb-4 pb-4">
       <div className="w-1/4 flex flex-col flex-shrink-1 flex-wrap m-5 rounded-lg shadow-gray-300 shadow-lg hover:shadow-gray-400 overflow-hidden">
         <div className="">
           <img
