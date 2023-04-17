@@ -9,6 +9,8 @@ import { BreedSort } from "../components/breedSort";
 import { AgeSort } from "../components/ageSort";
 import { LocationSort } from "../components/locationSort";
 import { GenerateSection } from "../components/generateSection";
+import Lottie from "react-lottie";
+import * as animationData from "../lotties/dog.json";
 
 export const Index = () => {
   // initialize state and variables
@@ -30,6 +32,16 @@ export const Index = () => {
   const [city, setCity] = useState("");
   const [state, setState] = useState<any[]>([]);
   const router = useRouter();
+
+  // lottie animation options
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   // get the dog cards for the current page
   let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
@@ -220,6 +232,21 @@ export const Index = () => {
           />
         ))}
       </div>
+      {currentCards.length <= 0 && (
+        <>
+          <div className="-ml-14 md:pr-10">
+            <Lottie
+              isClickToPauseDisabled={true}
+              options={defaultOptions}
+              height={200}
+              width={300}
+            />
+          </div>
+          <div className="flex justify-center py-4 text-xl text-center p-2 text-#1f081e">
+            Oops! Looks like no dogs match this description.
+          </div>
+        </>
+      )}
 
       <Paginator
         nPages={nPages}

@@ -61,7 +61,7 @@ export const LikePage = () => {
       <Header />
       {likedDogs.length == 0 && (
         <>
-          <div className="flex justify-center py-4 text-xl text-center text-#1f081e">
+          <div className="flex justify-center py-4 p-2 text-xl text-center text-#1f081e">
             Oops! Looks like you haven't liked any dogs yet. Go back and like
             some to see them here!
           </div>
