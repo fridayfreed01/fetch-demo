@@ -1,6 +1,10 @@
 import axios from "axios";
 import Link from "next/link";
 import router from "next/router";
+import HomeIcon from "@heroicons/react/24/outline/HomeIcon";
+import ArrowRightOnRectangleIcon from "@heroicons/react/24/outline/ArrowRightOnRectangleIcon";
+import HeartIcon from "@heroicons/react/24/outline/HeartIcon";
+
 export const Header = (props: any) => {
   const name = props.name;
   const email = props.email;
@@ -32,17 +36,17 @@ export const Header = (props: any) => {
       <div className="bg-gradient-to-r from-[#7d1f70] via-[#551653] to-[#1f081e] flex justify-end mb-[10vh] text-[#ffa900] text-xl py-2">
         <Link href="/">
           <button>
-            <div className="px-4 py-2">Home</div>
+            <HomeIcon className="w-8 h-8 m-4 text-orange-500" />
           </button>
         </Link>
         <Link href="/likepage">
           <button>
-            <div className="px-4 py-2">Favorites</div>
+            <HeartIcon className="w-8 h-8 m-4 text-orange-500" />
           </button>
         </Link>
-        <Link href="/login" onClick={handleClick}>
-          <button>
-            <div className="px-4 py-2">Sign Out</div>
+        <Link href="/login">
+          <button onClick={handleClick}>
+            <ArrowRightOnRectangleIcon className="w-8 h-8 m-4 text-orange-500" />
           </button>
         </Link>
       </div>

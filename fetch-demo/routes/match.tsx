@@ -12,7 +12,7 @@ export const MatchPage = () => {
   const [breed, setBreed] = useState<string>("");
   const [zip, setZip] = useState<string>("");
   const [name, setName] = useState<string>("");
-  
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -50,14 +50,20 @@ export const MatchPage = () => {
     <div>
       <Header />
       <div className="grid grid-cols-3 justify-center">
-      <div className="flex flex-col col-span-1 justify-center">
-      <div className="text-3xl py-6 flex justify-end">Match found!</div>
-      <div className="text-2xl flex justify-end">Meet {name}!</div>
-      <Lottie options={defaultOptions} height={200} width={300} />
+        <div className="flex flex-col col-span-1 justify-center">
+          <div className="text-3xl py-6 flex justify-end">Match found!</div>
+          <div className="text-2xl flex justify-end">Meet {name}!</div>
+          <Lottie options={defaultOptions} height={200} width={300} />
+        </div>
+        <MatchCard
+          name={name}
+          breed={breed}
+          age={age}
+          zip_code={zip}
+          img={img}
+        />
       </div>
-      <MatchCard name={name} breed={breed} age={age} zip_code={zip} img={img} />
-      </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

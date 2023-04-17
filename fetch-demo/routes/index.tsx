@@ -200,10 +200,10 @@ export const Index = () => {
               breeds={breeds}
               setSort={setSort}
             />
-           
+
             {/* Search by min/max age */}
             <AgeSort setAgeMax={setAgeMax} setAgeMin={setAgeMin} />
-            
+
             {/* Search by location */}
             <LocationSort
               setCity={setCity}
