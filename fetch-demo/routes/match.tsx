@@ -49,19 +49,32 @@ export const MatchPage = () => {
   return (
     <div>
       <Header />
-      <div className="grid grid-cols-3 justify-center">
-        <div className="flex flex-col col-span-1 justify-center">
-          <div className="text-3xl py-6 flex justify-end">Match found!</div>
-          <div className="text-2xl flex justify-end">Meet {name}!</div>
-          <Lottie options={defaultOptions} height={200} width={300} />
+      <div className="bg-[url('/confettibg.jpg')] bg-contain bg-blend-multiply bg-pink-50 w-full flex justify-center">
+        <div className="flex flex-col justify-center md:flex-row w-3/4 m-8 p-4 bg-[#ffffffef] rounded-lg shadow">
+          <div className="flex flex-col justify-center">
+            <div className="text-2xl font-semibold font-serif py-2">
+              Match found!
+            </div>
+            <div className="text-4xl md:text-6xl font-bold font-serif pb-6 text-[#551653]">
+              Meet {name}!
+            </div>
+            <div className="">
+              <Lottie
+                isClickToPauseDisabled={true}
+                options={defaultOptions}
+                height={200}
+                width={200}
+              />
+            </div>
+          </div>
+          <MatchCard
+            name={name}
+            breed={breed}
+            age={age}
+            zip_code={zip}
+            img={img}
+          />
         </div>
-        <MatchCard
-          name={name}
-          breed={breed}
-          age={age}
-          zip_code={zip}
-          img={img}
-        />
       </div>
       <Footer />
     </div>

@@ -71,7 +71,12 @@ export const LikePage = () => {
             some to see them here!
           </div>
           <div className="-ml-14 md:pr-10">
-            <Lottie options={defaultOptions} height={200} width={300} />
+            <Lottie
+              isClickToPauseDisabled={true}
+              options={defaultOptions}
+              height={200}
+              width={300}
+            />
           </div>
         </>
       )}
