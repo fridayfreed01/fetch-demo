@@ -1,7 +1,8 @@
 # fetch-demo
-Take home program for Fetch Rewards interview
+URL: https://fetch-demo.vercel.app/
 
-General Requirements
+Take home program for Fetch Rewards interview
+General Requirements:
 You first should have users enter their name and email on a login screen. Then, you should use this information to hit our login endpoint to authenticate with our service (see API Reference below).
 
 Once a user is successfully authenticated, they should be brought to a search page where they can browse available dogs. This page must meet the following requirements:
@@ -20,3 +21,17 @@ Additional Requirements
 -Your site should be hosted on the internet
 -Your source code should be stored in a git repository and hosted on the internet (i.e. Github)
 -You should include any necessary documentation to run your site locally
+
+Tech Used:
+-Axios for Post and Get requests
+-Tailwind CSS for styling
+-React-Router for routing
+-Next-Link for site navigation
+-React-Lottie for animations
+
+All external images are from Unsplash.
+
+Set Up Locally
+-clone the repo
+-yarn install
+-yarn dev
