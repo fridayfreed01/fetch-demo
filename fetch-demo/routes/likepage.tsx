@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import * as animationData from "../lotties/dog.json";
 import { Footer } from "../components/footer";
+import { useRouter } from "next/router";
 
 export const LikePage = () => {
+  const router = useRouter();
   const [likedDogs, setLikedDogs] = useState<any>([]);
   const [dogIds, setDogIds] = useState<any>([]);
   const config = {
@@ -18,6 +20,7 @@ export const LikePage = () => {
     withCredentials: true,
   };
 
+  // lottie animation options
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -27,38 +30,30 @@ export const LikePage = () => {
     },
   };
 
+  // get the liked dogs if a dogid changes
   useEffect(() => {
-    try {
-      axios
-        .post(
-          "https://frontend-take-home-service.fetch.com/dogs",
-          dogIds,
-          config
-        )
-        .then((response) => {
-          setLikedDogs(response.data);
-        });
-    } catch (e) {
-      console.log(e);
-    }
+    axios
+      .post("https://frontend-take-home-service.fetch.com/dogs", dogIds, config)
+      .then((response) => {
+        setLikedDogs(response.data);
+      })
+      .catch((e) => router.push("/login"));
   }, [dogIds]);
 
   useEffect(() => {}, [likedDogs]);
 
+  // get the liked dogs
   useEffect(() => {
-    try {
-      const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
-      setDogIds(tempIds);
-      axios
-        .post(
-          "https://frontend-take-home-service.fetch.com/dogs",
-          tempIds,
-          config
-        )
-        .then((response) => setLikedDogs(response.data));
-    } catch (e) {
-      console.log(e);
-    }
+    const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
+    setDogIds(tempIds);
+    axios
+      .post(
+        "https://frontend-take-home-service.fetch.com/dogs",
+        tempIds,
+        config
+      )
+      .then((response) => setLikedDogs(response.data))
+      .catch((e) => console.log(e));
   }, []);
 
   return (

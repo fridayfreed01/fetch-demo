@@ -13,6 +13,7 @@ export const MatchPage = () => {
   const [zip, setZip] = useState<string>("");
   const [name, setName] = useState<string>("");
 
+  // lottie animation options
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -22,6 +23,7 @@ export const MatchPage = () => {
     },
   };
 
+  // axios config
   const config = {
     headers: {
       "fetch-api-key":
@@ -30,6 +32,8 @@ export const MatchPage = () => {
     },
     withCredentials: true,
   };
+
+  // get the match dog
   useEffect(() => {
     axios
       .post(
@@ -38,7 +42,6 @@ export const MatchPage = () => {
         config
       )
       .then((response) => {
-        console.log(response.data[0].name);
         setName(response.data[0].name);
         setAge(response.data[0].age);
         setImg(response.data[0].img);
@@ -46,6 +49,7 @@ export const MatchPage = () => {
         setZip(response.data[0].zip_code);
       });
   }, []);
+
   return (
     <div>
       <Header />

@@ -11,6 +11,7 @@ import { LocationSort } from "../components/locationSort";
 import { GenerateSection } from "../components/generateSection";
 
 export const Index = () => {
+  // initialize state and variables
   const searchUrl = "https://frontend-take-home-service.fetch.com/dogs/search";
   const dogsUrl = "https://frontend-take-home-service.fetch.com/dogs";
   const [dogs, setDogs] = useState<any[]>([]);
@@ -28,11 +29,12 @@ export const Index = () => {
   const [zips, setZips] = useState<any[]>([]);
   const [city, setCity] = useState("");
   const [state, setState] = useState<any[]>([]);
-
   const router = useRouter();
 
+  // get the dog cards for the current page
   let currentCards = dogs.slice(indexOfFirstCard, indexOfLastCard);
 
+  // config for axios requests
   const config = {
     headers: {
       "fetch-api-key":
@@ -42,6 +44,7 @@ export const Index = () => {
     withCredentials: true,
   };
 
+  // params for dog search request
   const params = {
     size: 100,
     breeds: search,
@@ -52,6 +55,7 @@ export const Index = () => {
     from: currentPage - 1,
   };
 
+  // config for search axios request
   const searchConfig = {
     headers: {
       "fetch-api-key":
@@ -62,15 +66,7 @@ export const Index = () => {
     params,
   };
 
-  const locationConfig = {
-    headers: {
-      "fetch-api-key":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzgzMDU2MTF9.Ky49nXH6qgHJQ0CBsZGYsP7_Is2am3u5j3RAdEl457s",
-      "Content-Type": "application/json",
-    },
-    withCredentials: true,
-  };
-
+  // location data for axios request
   const locationData = {
     states: state,
     city: city,
@@ -78,9 +74,9 @@ export const Index = () => {
   };
 
   useEffect(() => {}, [search]);
-
   useEffect(() => {}, [sort]);
 
+  // update dog ids if changed on likes page
   useEffect(() => {
     const tempIds = JSON.parse(window.localStorage.getItem("dogIds") || "{}");
     if (tempIds.length > 0) {
@@ -90,7 +86,7 @@ export const Index = () => {
     }
   }, []);
 
-  //get locations
+  // get locations
   useEffect(() => {
     const stateZips: any = [];
     setZips([null]);
@@ -98,7 +94,7 @@ export const Index = () => {
       .post(
         "https://frontend-take-home-service.fetch.com/locations/search",
         locationData,
-        locationConfig
+        config
       )
       .then((response) => {
         const locs = response.data.results;
@@ -113,7 +109,7 @@ export const Index = () => {
       .catch((response) => router.push("/login"));
   }, [state, city]);
 
-  //get dogs
+  // get dogs
   useEffect(() => {
     axios
       .get(searchUrl, searchConfig)
@@ -128,7 +124,7 @@ export const Index = () => {
       .catch((response) => router.push("/login"));
   }, [search, sort, ageMin, ageMax, zips]);
 
-  //set pages for pagination
+  // set pages for pagination
   useEffect(() => {
     if (currentPage >= nPages) {
       setCurrentPage(1);

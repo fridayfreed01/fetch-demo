@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 export const Login = () => {
@@ -10,6 +9,7 @@ export const Login = () => {
 
   const router = useRouter();
 
+  // axios config
   const config = {
     headers: {
       "fetch-api-key":
@@ -18,22 +18,19 @@ export const Login = () => {
     },
     withCredentials: true,
   };
+  // submit credentials and go to index page
   // @ts-ignore
   const handleSubmit = (e) => {
-    try {
-      const data = {
-        name: name,
-        email: email,
-      };
-      e.preventDefault();
-      axios
-        .post(url, data, config)
-        .then((response) => router.push("/"))
-        .catch((error) => console.log(error)),
-        [];
-    } catch (e) {
-      console.log(e);
-    }
+    const data = {
+      name: name,
+      email: email,
+    };
+    e.preventDefault();
+    axios
+      .post(url, data, config)
+      .then((response) => router.push("/"))
+      .catch((error) => router.push("/login")),
+      [];
   };
 
   return (

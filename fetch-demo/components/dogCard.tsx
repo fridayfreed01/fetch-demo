@@ -24,7 +24,6 @@ export const DogCard = (props: DogCardProps) => {
     //un-liking
     else if (buttonFill == true) {
       setButtonFill(false);
-      console.log(props.dogIds.filter((id) => id != props.dog.id));
       props.setDogIds(props.dogIds.filter((id) => id != props.dog.id));
     }
   };
