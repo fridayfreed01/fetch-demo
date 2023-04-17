@@ -4,8 +4,10 @@ import { Header } from "../components/header";
 import axios from "axios";
 import { DogCard } from "../components/dogCard";
 import Paginator from "../components/paginator";
-import { stateAbbreviations } from "../components/stateAbbrev";
 import { Footer } from "../components/footer";
+import { BreedSort } from "../components/breedSort";
+import { AgeSort } from "../components/ageSort";
+import { LocationSort } from "../components/locationSort";
 
 export const Index = () => {
   const searchUrl = "https://frontend-take-home-service.fetch.com/dogs/search";
@@ -192,122 +194,17 @@ export const Index = () => {
         </div>
         <div className="flex justify-center">
           <div className="grid lg:grid-cols-3 gap-2 items-center justify-between pb-[8vh] px-6 max-w-full lg:w-3/4">
-            {/* breed */}
-            <div className="flex flex-col my-2 lg:items-center">
-              <div>
-                <div className="my-2">
-                  <select
-                    className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
-                    id="breeds"
-                    onChange={(e) => {
-                      if (e.target.value == "") {
-                        setSearch([null]);
-                      } else {
-                        setSearch([e.target.value]);
-                      }
-                    }}
-                  >
-                    <option label="Search by breed"></option>
-                    {breeds.map((breed, i) => (
-                      <option key={i}>{breed}</option>
-                    ))}
-                  </select>
-                </div>
-                {/* sort */}
-                <div>
-                  <select
-                    className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
-                    id="sort"
-                    onChange={(e) => {
-                      if (e.target.value == "Ascending") {
-                        setSort("asc");
-                      } else {
-                        setSort("desc");
-                      }
-                    }}
-                  >
-                    <option defaultValue={"Ascending"}>Ascending</option>
-                    <option>Descending</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            {/* age */}
-            <div className="w-full my-2 flex lg:justify-center">
-              <div className="flex flex-col w-1/2">
-                <input
-                  className="bg-white border mt-2 px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
-                  id="ageMin"
-                  placeholder="Age Min"
-                  onChange={(e) => {
-                    setAgeMin(e.target.value);
-                  }}
-                ></input>
-                <input
-                  className=" bg-white border mt-2 px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
-                  id="ageMax"
-                  placeholder="Age Max"
-                  onChange={(e) => {
-                    setAgeMax(e.target.value);
-                  }}
-                ></input>
-              </div>
-            </div>
-            <div className="flex flex-col lg:items-center">
-              <div>
-                <div className="flex flex-row ">
-                  {/* city */}
-                  <div className="my-2">
-                    <input
-                      className="bg-white border px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
-                      id="city"
-                      placeholder="City"
-                      onChange={(e) => {
-                        if (e.target.value == "") {
-                          setCity("");
-                        } else {
-                          setCity(e.target.value);
-                        }
-                      }}
-                    />
-                  </div>
-                  {/* state */}
-                  <div className="m-2">
-                    <select
-                      className="bg-white border border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
-                      id="state"
-                      onChange={(e) => {
-                        if (e.target.value == "") {
-                          setState([]);
-                        } else {
-                          setState([e.target.value]);
-                        }
-                      }}
-                    >
-                      <option label="State"></option>
-                      {stateAbbreviations.map((state, i) => (
-                        <option key={i}>{state}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                {/* zip code */}
-                <div>
-                  <input
-                    className="bg-white border px-2 border-gray-400 hover:border-gray-500 rounded shadow focus:outline-none focus:shadow-outline"
-                    id="zip"
-                    placeholder="Zip Code"
-                    onChange={(e) => {
-                      if (e.target.value == "") {
-                        setZips([null]);
-                      } else {
-                        setZips([e.target.value]);
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+            <BreedSort
+              setSearch={setSearch}
+              breeds={breeds}
+              setSort={setSort}
+            />
+            <AgeSort setAgeMax={setAgeMax} setAgeMin={setAgeMin} />
+            <LocationSort
+              setCity={setCity}
+              setState={setState}
+              setZips={setZips}
+            />
           </div>
         </div>
       </div>

@@ -39,7 +39,10 @@ export const DogCard = (props: DogCardProps) => {
   }, []);
 
   return (
-    <div className="flex col-span-1 justify-center mb-4 pb-4" key={props.dog.key}>
+    <div
+      className="flex col-span-1 justify-center mb-4 pb-4"
+      key={props.dog.key}
+    >
       <div className="w-3/4 flex flex-col flex-shrink-1 flex-wrap m-5 rounded-lg shadow-gray-300 shadow-lg hover:shadow-gray-400 overflow-hidden">
         <div className="">
           <img
