@@ -21,13 +21,10 @@ export const Header = (props: any) => {
   const handleClick = (e) => {
     try {
       axios.post(logoutUrl, data, config).then((response) => response);
+      window.localStorage.clear();
     } catch (e) {
-      console.log(e);
+      router.push("/login");
     }
-  };
-
-  const handleLikePage = () => {
-    router.push("/likepage");
   };
 
   return (
