@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
 import { Header } from "../components/header";
-import { useRouter, NextRouter, withRouter } from "next/router";
 import axios from "axios";
 import { MatchCard } from "../components/matchCard";
+import * as animationData from "../lotties/matchdog.json";
+import Lottie from "react-lottie";
+import { Footer } from "../components/footer";
 
 export const MatchPage = () => {
-  const router = useRouter();
   const [age, setAge] = useState<string>("");
   const [img, setImg] = useState<string>("");
   const [breed, setBreed] = useState<string>("");
   const [zip, setZip] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [match, setMatch] = useState<any>();
+  
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   const config = {
     headers: {
@@ -40,9 +49,15 @@ export const MatchPage = () => {
   return (
     <div>
       <Header />
-      <div className="flex justify-center text-3xl py-6">Match found!</div>
-      <div className="flex justify-center text-2xl">Meet {name}!</div>
+      <div className="grid grid-cols-3 justify-center">
+      <div className="flex flex-col col-span-1 justify-center">
+      <div className="text-3xl py-6 flex justify-end">Match found!</div>
+      <div className="text-2xl flex justify-end">Meet {name}!</div>
+      <Lottie options={defaultOptions} height={200} width={300} />
+      </div>
       <MatchCard name={name} breed={breed} age={age} zip_code={zip} img={img} />
+      </div>
+      <Footer/>
     </div>
   );
 };

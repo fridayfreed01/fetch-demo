@@ -194,12 +194,17 @@ export const Index = () => {
         </div>
         <div className="flex justify-center">
           <div className="grid lg:grid-cols-3 gap-2 items-center justify-between pb-[8vh] px-6 max-w-full lg:w-3/4">
+            {/* Search by breed and ascending/descending */}
             <BreedSort
               setSearch={setSearch}
               breeds={breeds}
               setSort={setSort}
             />
+           
+            {/* Search by min/max age */}
             <AgeSort setAgeMax={setAgeMax} setAgeMin={setAgeMin} />
+            
+            {/* Search by location */}
             <LocationSort
               setCity={setCity}
               setState={setState}
