@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export const Login = () => {
@@ -28,10 +28,9 @@ export const Login = () => {
       e.preventDefault();
       axios
         .post(url, data, config)
-        .then((response) => console.log(response.data))
+        .then((response) => router.push("/"))
         .catch((error) => console.log(error)),
         [];
-      router.push("/");
     } catch (e) {
       console.log(e);
     }
